@@ -1,3 +1,5 @@
+"""A bot module that implements a custom help command and extra features"""
+
 import discord
 from discord import TextChannel, User
 from discord.ext.commands import Bot, DefaultHelpCommand
@@ -50,6 +52,9 @@ class AliasHelpCommand(DefaultHelpCommand):
 
 
 class OperationBot(Bot):
+    """A custom discord bot class that inherits Bot"""
+
+    # pylint: disable=R0902
     def __init__(self, *args, help_command=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.commandchannel: TextChannel
@@ -57,6 +62,7 @@ class OperationBot(Bot):
         self.eventchannel: TextChannel
         self.eventarchivechannel: TextChannel
         self.owner: User
+        self.owner_id = ADMIN
         self.signoff_notify_user: User
         self.awaiting_reply = False
 
@@ -66,15 +72,16 @@ class OperationBot(Bot):
             self.help_command = help_command
 
     def fetch_data(self) -> None:
-        self.commandchannel      = self.get_channel(cfg.COMMAND_CHANNEL)
-        self.logchannel          = self.get_channel(cfg.LOG_CHANNEL)
-        self.eventchannel        = self.get_channel(cfg.EVENT_CHANNEL)
+        """Fetch data from Discord API after connecting."""
+        self.commandchannel = self.get_channel(cfg.COMMAND_CHANNEL)
+        self.logchannel = self.get_channel(cfg.LOG_CHANNEL)
+        self.eventchannel = self.get_channel(cfg.EVENT_CHANNEL)
         self.eventarchivechannel = self.get_channel(cfg.EVENT_ARCHIVE_CHANNEL)
-        self.owner_id            = ADMIN
-        self.owner               = self.get_user(self.owner_id)
+        self.owner = self.get_user(self.owner_id)
         self.signoff_notify_user = self.get_user(SIGNOFF_NOTIFY_USER)
 
     async def import_database(self):
+        """Import event database."""
         try:
             EventDatabase.loadDatabase(self.commandchannel.guild.emojis)
         except ValueError as e:
