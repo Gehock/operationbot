@@ -5,8 +5,8 @@ from typing import Any, Dict, Optional, Tuple
 
 from discord import Emoji
 
-import config as cfg
-from event import Event
+from . import config as cfg
+from .event import Event
 
 DATABASE_VERSION = 4
 

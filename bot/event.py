@@ -3,10 +3,10 @@ from typing import Dict, List, Optional, Tuple
 
 from discord import Embed, Emoji
 
-import config as cfg
-from secret import PLATOON_SIZE
-from role import Role
-from roleGroup import RoleGroup
+from . import config as cfg
+from .secret import PLATOON_SIZE
+from .role import Role
+from .roleGroup import RoleGroup
 
 TITLE = "Operation"
 SIDEOP_TITLE = "Side Operation"

@@ -10,38 +10,48 @@ from discord import Forbidden, Member, Message
 from discord.ext.commands import (BadArgument, Cog, Context, Converter,
                                   MissingRequiredArgument, command)
 
-import config as cfg
-import messageFunctions as msgFnc
-from event import Event
-from eventDatabase import EventDatabase
-from operationbot import OperationBot
-from secret import ADMINS
-from secret import COMMAND_CHAR as CMD
+from . import config as cfg
+from . import messageFunctions as msgFnc
+from .event import Event
+from .eventDatabase import EventDatabase
+from .operationbot import OperationBot
+from .secret import ADMINS
+from .secret import COMMAND_CHAR as CMD
+
+def _parse_date(arg: str) -> date:
+    for fmt in ('%Y-%m-%d', '%Y%m%d', '%y-%m-%d', '%y%m%d', '%m-%d', '%m%d'):
+        numbers = sum(c.isdigit() for c in arg)
+        print(numbers, arg, fmt)
+        if numbers <= 6 and 'Y' in fmt:
+            continue
+        if numbers <= 4 and 'y' in fmt:
+            continue
+        try:
+            date = datetime.strptime(arg, fmt)
+            if date.year == 1900:
+                date = date.replace(year=datetime.today().year)
+            return date
+        except ValueError:
+            pass
+    raise BadArgument("Invalid date format {}. "
+                      "Has to be one of: YYYY-MM-DD, YYYYMMDD, "
+                      "YY-MM-DD, YYMMDD, MM-DD, MMDD"
+                      .format(arg))
 
 
 class EventDateTime(Converter):
     async def convert(self, ctx: Context, arg: str) -> datetime:
-        try:
-            date = datetime.strptime(arg, '%Y-%m-%d')
-        except ValueError:
-            raise BadArgument("Invalid date format {}. Has to be YYYY-MM-DD"
-                              .format(arg))
-        return date.replace(hour=18, minute=45)
+        return datetime.combine(_parse_date(arg), time(18, 45))
 
 
 class EventDate(Converter):
     async def convert(self, ctx: Context, arg: str) -> date:
-        try:
-            _date = date.fromisoformat(arg)
-        except ValueError:
-            raise BadArgument("Invalid date format {}. Has to be YYYY-MM-DD"
-                              .format(arg))
-        return _date
+        return _parse_date(arg)
 
 
 class EventTime(Converter):
     async def convert(self, ctx: Context, arg: str) -> datetime:
-        for fmt in('%H:%M', '%H%M'):
+        for fmt in ('%H:%M', '%H%M'):
             try:
                 return datetime.strptime(arg, fmt)
             except ValueError:
@@ -893,6 +903,7 @@ class CommandListener(Cog):
     @createside.error
     @createside2.error
     @createsidequick.error
+    @createside2quick.error
     @multicreate.error
     @changesize.error
     @changesizeall.error

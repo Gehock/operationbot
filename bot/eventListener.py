@@ -5,12 +5,12 @@ from typing import Optional
 from discord import Game, Member, Message, RawReactionActionEvent, Reaction
 from discord.ext.commands import Cog
 
-import config as cfg
-import messageFunctions as msgFnc
-from event import Event
-from eventDatabase import EventDatabase
-from operationbot import OperationBot
-from role import Role
+from . import config as cfg
+from . import messageFunctions as msgFnc
+from .event import Event
+from .eventDatabase import EventDatabase
+from .operationbot import OperationBot
+from .role import Role
 
 
 class EventListener(Cog):

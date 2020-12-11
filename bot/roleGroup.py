@@ -2,8 +2,8 @@ from typing import List, Tuple
 
 from discord import Emoji, Guild
 
-import config as cfg
-from role import Role
+from . import config as cfg
+from .role import Role
 
 
 class RoleGroup:

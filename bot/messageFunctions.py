@@ -4,10 +4,10 @@ from discord import ClientUser, Emoji, Message, NotFound, TextChannel
 from discord.abc import Messageable
 from discord.ext.commands import Context
 
-import config as cfg
-from event import Event
+# from . import config as cfg
+from .event import Event
 
-# from operationbot import OperationBot
+# from .operationbot import OperationBot
 
 
 async def getEventMessage(event: Event, bot, archived=False) \
@@ -26,7 +26,7 @@ async def getEventMessage(event: Event, bot, archived=False) \
 
 async def getEvent(messageID, ctx: Context) -> Optional[Event]:
     """Get an event by a message id."""
-    from eventDatabase import EventDatabase
+    from .eventDatabase import EventDatabase
     eventToUpdate = EventDatabase.getEventByMessage(messageID)
     if eventToUpdate is None:
         await ctx.send("getEvent: No event found with that message ID: {}"
@@ -43,7 +43,7 @@ async def sortEventMessages(target: Messageable, bot=None):
         else:
             raise ValueError("Requires either the bot argument or context.")
 
-    from eventDatabase import EventDatabase
+    from .eventDatabase import EventDatabase
     EventDatabase.sortEvents()
     print(EventDatabase.events)
 

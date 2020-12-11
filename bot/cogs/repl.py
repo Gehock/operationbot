@@ -12,8 +12,8 @@ from discord.ext import commands
 from discord.ext.commands import (BadArgument, Bot, Cog, Context,
                                   MissingRequiredArgument, command)
 
-from eventDatabase import EventDatabase  # noqa
-from secret import COMMAND_CHAR as CMD
+from bot.eventDatabase import EventDatabase  # noqa
+from bot.secret import COMMAND_CHAR as CMD
 
 
 class REPL(commands.Cog):

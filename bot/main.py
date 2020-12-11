@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import config as cfg
-from operationbot import OperationBot
-from secret import COMMAND_CHAR, TOKEN
+from bot import config as cfg
+from bot.operationbot import OperationBot
+from bot.secret import COMMAND_CHAR, TOKEN
 
 CONFIG_VERSION = 8
 if cfg.VERSION != CONFIG_VERSION:
@@ -9,13 +9,14 @@ if cfg.VERSION != CONFIG_VERSION:
         "Incompatible config file, expecting version {}, found version {}"
         .format(CONFIG_VERSION, cfg.VERSION))
 
-initial_extensions = ['commandListener', 'eventListener', 'cogs.repl']
+initial_extensions = ['bot.commandListener',
+    'bot.eventListener', 'bot.cogs.repl']
 bot = OperationBot(command_prefix=COMMAND_CHAR)
 # bot.remove_command("help")
 
 if __name__ == '__main__':
     print("Starting up")
-    bot.load_extension('reload')
+    bot.load_extension('bot.reload')
     print("Loading extensions")
     for extension in initial_extensions:
         # try:

@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-import secret
+from . import secret
 
 VERSION = 8
 # PURGE_ON_CONNECT = False
