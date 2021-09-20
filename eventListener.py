@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from typing import Optional, Union, cast
 
 from discord import Game, Message, RawReactionActionEvent
+from discord.emoji import Emoji
 from discord.ext.commands import Cog
 from discord.partial_emoji import PartialEmoji
 from discord.user import User
@@ -44,9 +45,12 @@ class EventListener(Cog):
     @Cog.listener()
     async def on_raw_reaction_add(self, payload: RawReactionActionEvent):
 
-        if payload.member == self.bot.user or \
-                payload.channel_id != self.bot.eventchannel.id:
-            # Bot's own reaction, or reaction outside of the event channel
+        if payload.member == self.bot.user:
+            # Ignore bot's own reactions
+            return
+        if (payload.channel_id != self.bot.eventchannel.id
+                and payload.channel_id != self.bot.zeus_channel.id):
+            # Reaction outside of the event or zeuses' channel
             return
 
         if payload.emoji.name in cfg.EXTRA_EMOJIS:

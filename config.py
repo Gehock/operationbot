@@ -11,6 +11,7 @@ if secret.DEBUG:
     EVENT_ARCHIVE_CHANNEL = _test_channel
     COMMAND_CHANNEL = _test_channel
     LOG_CHANNEL = _test_channel
+    ZEUS_CHANNEL = _test_channel
     GAME = 'with bugs'
     EMOJI_GUILD = 219564389462704130
 else:
@@ -18,6 +19,7 @@ else:
     EVENT_ARCHIVE_CHANNEL = 528914471700267029
     COMMAND_CHANNEL = 528980590930821131
     LOG_CHANNEL = 621066917339201547
+    ZEUS_CHANNEL = 309059356643557376
     GAME = 'with events'
     # If set to 0, the bot uses Command Channel's guild
     EMOJI_GUILD = 0
@@ -25,7 +27,13 @@ else:
 JSON_FILEPATH = {
     "events":  "database/events.json",
     "archive": "database/archive.json",
+    "drafts": "database/drafts.json",
 }
+
+DRAFT_DELETE = "\N{CROSS MARK}"
+DRAFT_PUBLISH = "\N{WHITE HEAVY CHECK MARK}"
+DRAFT_EDIT = "\N{PENCIL}"
+
 ADDITIONAL_ROLE_EMOJIS = [
     "\N{DIGIT ONE}\N{COMBINING ENCLOSING KEYCAP}",
     "\N{DIGIT TWO}\N{COMBINING ENCLOSING KEYCAP}",

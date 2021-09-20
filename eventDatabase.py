@@ -8,6 +8,7 @@ from discord import Emoji
 import config as cfg
 from errors import EventNotFound
 from event import Event
+from eventdraft import EventDraft
 
 DATABASE_VERSION = 4
 
@@ -17,7 +18,9 @@ class EventDatabase:
 
     events: Dict[int, Event] = {}
     eventsArchive: Dict[int, Event] = {}
+    drafts: Dict[int, EventDraft] = {}
     nextID: int = 0
+    next_draft_id: int = 0
     _emojis: Optional[Tuple[Emoji, ...]] = None
 
     @classmethod
@@ -29,25 +32,45 @@ class EventDatabase:
 
     @classmethod
     def createEvent(cls, date: datetime, eventID: int = -1,
-                    sideop=False, platoon_size=None) -> Event:
+                    sideop=False, platoon_size=None, draft=False) -> Event:
+        return cls._create_event(date, eventID, sideop, platoon_size, draft)
+
+    @classmethod
+    def create_draft(cls, date: datetime, event_id=-1,
+                     sideop=False, platoon_size=None) -> Event:
+        return cls._create_event(date, event_id, sideop, platoon_size,
+                                 draft=True)
+
+    @classmethod
+    def _create_event(cls, date: datetime, event_id=-1,
+                      sideop=False, platoon_size=None, draft=False) -> Event:
         """Create a new event and store it.
 
         Does not create a message for the event.
         """
-        if eventID == -1:
-            eventID = cls.nextID
-            cls.nextID += 1
+        if event_id == -1:
+            if draft:
+                event_id = cls.next_draft_id
+                cls.next_draft_id += 1
+            else:
+                event_id = cls.nextID
+                cls.nextID += 1
             importing = False
         else:
             importing = True
 
-        # Create event
-        event = Event(date, cls.emojis, eventID=eventID,  # type: ignore
-                      importing=importing,
-                      sideop=sideop, platoon_size=platoon_size)
-
-        # Store event
-        cls.events[eventID] = event
+        if draft:
+            # TODO: Get role name dynamically
+            event = EventDraft(date, cls.emojis, eventID=event_id,
+                               importing=importing, sideop=sideop,
+                               platoon_size=platoon_size,
+                               manager_role_name="staff")
+            cls.drafts[event_id] = event
+        else:
+            event = Event(date, cls.emojis, eventID=event_id,
+                          importing=importing, sideop=sideop,
+                          platoon_size=platoon_size)
+            cls.events[event_id] = event
 
         return event
 
@@ -146,10 +169,18 @@ class EventDatabase:
             cls.events[event.id] = event
 
     @classmethod
-    def toJson(cls, archive=False):
+    def toJson(cls, archive=False, drafts=False):
         # TODO: rename to saveDatabase
-        events = cls.events if not archive else cls.eventsArchive
-        filename = cfg.JSON_FILEPATH['events' if not archive else 'archive']
+        if archive:
+            name = 'archive'
+            events = cls.eventsArchive
+        elif drafts:
+            name = 'drafts'
+            events = cls.drafts
+        else:
+            name = 'events'
+            events = cls.events
+        filename = cfg.JSON_FILEPATH[name]
 
         cls.writeJson(events, filename)
 
@@ -181,6 +212,10 @@ class EventDatabase:
         print("Importing archive")
         cls.eventsArchive, _ = cls.readJson(
             cfg.JSON_FILEPATH['archive'], output_events=False)
+        print("Importing drafts")
+        EventDatabase.drafts, EventDatabase.next_draft_id = \
+            EventDatabase.readJson(cfg.JSON_FILEPATH['drafts'],
+                                   output_events=False)
 
     @classmethod
     def readJson(cls, filename: str, output_events=True) \

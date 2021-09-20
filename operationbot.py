@@ -6,10 +6,11 @@ import discord
 from discord import TextChannel, User
 from discord.ext.commands import Bot, DefaultHelpCommand
 from discord.guild import Guild
+# from discord.role import Role
 
 import config as cfg
 from eventDatabase import EventDatabase
-from secret import ADMIN, SIGNOFF_NOTIFY_USER
+from secret import ADMIN, SIGNOFF_NOTIFY_USER, GUILD_ID, STAFF_ROLE
 
 
 class AliasHelpCommand(DefaultHelpCommand):
@@ -62,9 +63,12 @@ class OperationBot(Bot):
         self.logchannel: TextChannel
         self.eventchannel: TextChannel
         self.eventarchivechannel: TextChannel
+        self.zeus_channel: TextChannel
         self.owner: User
         self.signoff_notify_user: User
         self.awaiting_reply = False
+        # self.guild: Guild
+        # self.staff_role: Role
 
         if help_command is None:
             self.help_command = AliasHelpCommand()
@@ -77,6 +81,9 @@ class OperationBot(Bot):
         self.logchannel = self._get_channel(cfg.LOG_CHANNEL)
         self.eventchannel = self._get_channel(cfg.EVENT_CHANNEL)
         self.eventarchivechannel = self._get_channel(cfg.EVENT_ARCHIVE_CHANNEL)
+        self.zeus_channel = self._get_channel(cfg.ZEUS_CHANNEL)
+        # self.guild = self.get_guild(GUILD_ID)
+        # self.staff_role = self.guild.get_role(STAFF_ROLE)
         self.owner_id = ADMIN
         self.owner = self._get_user(self.owner_id)
         self.signoff_notify_user = self._get_user(SIGNOFF_NOTIFY_USER)

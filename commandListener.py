@@ -187,7 +187,7 @@ class CommandListener(Cog):
     async def _create_event(self, ctx: Context, date: datetime,
                             batch=False, sideop=False,
                             platoon_size=None, force=False,
-                            silent=False) -> Event:
+                            silent=False, draft=False) -> Event:
         # TODO: Check for duplicate event dates?
         if date < datetime.today() and not force:
             raise BadArgument(f"Requested date {date} has already passed. "
@@ -195,10 +195,15 @@ class CommandListener(Cog):
 
         # Create event and sort events, export
         event: Event = EventDatabase.createEvent(date, sideop=sideop,
-                                                 platoon_size=platoon_size)
-        await msgFnc.createEventMessage(event, self.bot.eventchannel)
+                                                 platoon_size=platoon_size,
+                                                 draft=draft)
+        if draft:
+            await msgFnc.createEventMessage(event, ctx.channel, update_id=False)
+        else:
+            await msgFnc.createEventMessage(event, self.bot.eventchannel)
+            if not batch:
+                await msgFnc.sortEventMessages(self.bot)
         if not batch:
-            await msgFnc.sortEventMessages(self.bot)
             EventDatabase.toJson()  # Update JSON file
         if not silent:
             await ctx.send(f"Created event {event}")
@@ -209,6 +214,25 @@ class CommandListener(Cog):
         message = await msgFnc.getEventMessage(event, self.bot)
         await ctx.send(message.jump_url)
         await msgFnc.createEventMessage(event, ctx.channel, update_id=False)
+
+    @command(aliases=['cd'])
+    async def draft(self, ctx: Context, date: EventDateTime, force=None,
+                    platoon_size=None):
+        """
+        Create a new event draft.
+
+        Use the `force` argument to create past events.
+
+        The platoon_size argument can be used to override the platoon size. Valid values: 1PLT, 2PLT
+
+        Example: draft 2019-01-01
+                 draft 2019-01-01 force
+                 draft 2019-01-01 force 2PLT
+        """  # NOQA
+
+        await self._create_event(ctx, date, platoon_size=platoon_size,
+                                 force=force, draft=True)
+
 
     # Create event command
     @command(aliases=['c'])
