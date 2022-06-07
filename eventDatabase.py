@@ -19,12 +19,14 @@ class EventDatabase:
     eventsArchive: Dict[int, Event] = {}
     nextID: int = 0
     _emojis: Optional[Tuple[Emoji, ...]] = None
+    offline_load = False
 
     @classmethod
     @property
     def emojis(cls) -> Tuple[Emoji, ...]:
-        if cls._emojis is None:
+        if cls._emojis is None and not cls.offline_load:
             raise ValueError("No EventDatabase.emojis set")
+        # FIXME: what to return when emojis is None?
         return cls._emojis
 
     @classmethod
@@ -169,9 +171,11 @@ class EventDatabase:
             json.dump(data, jsonFile, indent=2)
 
     @classmethod
-    def loadDatabase(cls, emojis: Optional[Tuple[Emoji, ...]] = None):
+    def loadDatabase(cls, emojis: Optional[Tuple[Emoji, ...]] = None,
+                     offline_load=False):
+        cls.offline_load = offline_load
         if cls._emojis is None:
-            if emojis is None:
+            if emojis is None and not cls.offline_load:
                 raise ValueError("No emojis provided")
             cls._emojis = emojis
         print("Importing events")
@@ -238,7 +242,8 @@ class EventDatabase:
                                      '%Y-%m-%d')
             # NOTE: Ignoring the type here because mypy is buggy and doesn't
             # detect class properties correctly
-            event = Event(date, emojis, importing=True)  # type: ignore
+            event = Event(date, emojis, importing=True,  # type: ignore
+                          offline_load=True)
             event.fromJson(eventID, eventData, emojis)
             events[event.id] = event
 
