@@ -41,7 +41,8 @@ class User:
 class Event:
 
     def __init__(self, date: datetime.datetime, guildEmojis: Tuple[Emoji, ...],
-                 eventID=0, importing=False, sideop=False, platoon_size=None):
+                 eventID=0, importing=False, sideop=False, platoon_size=None,
+                 offline_load=False):
         self._title: Optional[str] = None
         self.date = date
         self._terrain = TERRAIN
@@ -69,7 +70,7 @@ class Event:
         if self.platoon_size.startswith("WW2"):
             self.title = "WW2 " + self.title
 
-        self.normalEmojis = self._getNormalEmojis(guildEmojis)
+        self.normalEmojis = self._getNormalEmojis(guildEmojis, offline_load)
         if not importing:
             self._add_default_role_groups()
             self._add_default_roles()
@@ -384,13 +385,17 @@ class Event:
         self._terrain = terrain
 
     # Get emojis for normal roles
-    def _getNormalEmojis(self, guildEmojis: Tuple[Emoji, ...]) \
-            -> Dict[str, Emoji]:
+    def _getNormalEmojis(self, guildEmojis: Tuple[Emoji, ...],
+                         offline_load=False) -> Dict[str, Emoji]:
         normalEmojis = {}
 
-        for emoji in guildEmojis:
-            if emoji.name in cfg.DEFAULT_ROLES[self.platoon_size]:
-                normalEmojis[emoji.name] = emoji
+        if offline_load:
+            for emoji in cfg.DEFAULT_ROLES[self.platoon_size].keys():
+                normalEmojis[emoji] = emoji
+        else:
+            for emoji in guildEmojis:
+                if emoji.name in cfg.DEFAULT_ROLES[self.platoon_size]:
+                    normalEmojis[emoji.name] = emoji
 
         return normalEmojis
 
