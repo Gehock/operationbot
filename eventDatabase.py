@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from datetime import datetime
 from typing import Any, Dict, Optional, Tuple
@@ -20,6 +21,8 @@ class EventDatabase:
     nextID: int = 0
     _emojis: Optional[Tuple[Emoji, ...]] = None
     offline_load = False
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
 
     @classmethod
     @property
@@ -180,9 +183,9 @@ class EventDatabase:
             if emojis is None and not cls.offline_load:
                 raise ValueError("No emojis provided")
             cls._emojis = emojis
-        print("Importing events")
+        cls.logger.info("Importing events")
         cls.events, cls.nextID = cls.readJson(cfg.JSON_FILEPATH['events'])
-        print("Importing archive")
+        cls.logger.info("Importing archive")
         cls.eventsArchive, _ = cls.readJson(
             cfg.JSON_FILEPATH['archive'], output_events=False)
 
@@ -190,7 +193,7 @@ class EventDatabase:
     def readJson(cls, filename: str, output_events=True) \
             -> Tuple[Dict[int, Event], int]:
         """Fill events and eventsArchive with data from JSON."""
-        print("Importing")
+        cls.logger.info("Importing")
 
         # Try to access emojis early so that we immediately bail out on error
         # We don't need to touch the database file if emojis is not set
@@ -202,17 +205,17 @@ class EventDatabase:
                 with open(filename) as jsonFile:
                     data: Dict = json.load(jsonFile)
             except json.decoder.JSONDecodeError as e:
-                print("Malformed JSON file! Backing up and",
-                      "creating an empty database")
+                cls.logger.info("Malformed JSON file! Backing up and "
+                                "creating an empty database")
                 backup_date = datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 # Backup old file
                 backupName = f"{filename}-{backup_date}.bak"
                 os.rename(filename, backupName)
-                print("Backed up to", backupName)
+                cls.logger.info("Backed up to %s", backupName)
                 # Let next handler create the file and continue importing
                 raise FileNotFoundError from e
         except FileNotFoundError:
-            print("JSON not found, creating")
+            cls.logger.info("JSON not found, creating")
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename, "w") as jsonFile:
                 # Create a new file with empty JSON structure inside
@@ -228,7 +231,7 @@ class EventDatabase:
         if databaseVersion != DATABASE_VERSION:
             msg = ("Incorrect database version. Expected: "
                    f"{DATABASE_VERSION}, got: {databaseVersion}.")
-            print(msg)
+            cls.logger.info(msg)
             raise ValueError(msg)
 
         events = {}
@@ -251,7 +254,7 @@ class EventDatabase:
 
         if output_events:
             for eventID, event in events.items():
-                print(eventID, event)
+                cls.logger.info("%s %s", eventID, event)
 
-        print("Import done")
+        cls.logger.info("Import done")
         return events, nextID
