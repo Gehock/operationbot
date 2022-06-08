@@ -40,8 +40,9 @@ class User:
 
 class Event:
 
-    def __init__(self, date: datetime.datetime, guildEmojis: Tuple[Emoji, ...],
-                 eventID=0, importing=False, sideop=False, platoon_size=None,
+    def __init__(self, date: datetime.datetime,
+                 guildEmojis: Tuple[Emoji, ...] = (), eventID=0,
+                 importing=False, sideop=False, platoon_size=None,
                  offline_load=False):
         self._title: Optional[str] = None
         self.date = date

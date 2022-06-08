@@ -6,7 +6,7 @@ from event import Event
 
 def test_default():
     date = datetime(2020, 1, 1, 12, 0, 0)
-    event = Event(date, (), platoon_size='empty')
+    event = Event(date, offline_load=True)
 
     assert event.date == date
     assert event.time == time(hour=date.hour, minute=date.minute)
@@ -30,7 +30,7 @@ def test_default():
 
 def test_dlc():
     date = datetime(2020, 1, 1, 12, 0, 0)
-    event = Event(date, (), platoon_size='empty')
+    event = Event(date, offline_load=True)
 
     event.terrain = 'Tanoa'
     assert event.terrain == 'Tanoa'
@@ -50,25 +50,25 @@ def test_dlc():
 
 def test_ww2():
     date = datetime(2020, 1, 1, 12, 0)
-    event = Event(date, (), platoon_size='WW2side', sideop=True)
+    event = Event(date, offline_load=True, platoon_size='WW2side', sideop=True)
     assert event.title == "WW2 Side Operation"
 
 
 def test_colours():
     date = datetime(2020, 1, 1, 12, 0)
-    event = Event(date, (), platoon_size='empty')
+    event = Event(date, offline_load=True)
     assert event.color == EMBED_COLOR['DEFAULT']
 
-    event = Event(date, (), platoon_size='empty', sideop=True)
+    event = Event(date, offline_load=True, sideop=True)
     assert event.color == EMBED_COLOR['SIDEOP']
 
-    event = Event(date, (), platoon_size='WW2side', sideop=True)
+    event = Event(date, offline_load=True, platoon_size='WW2side', sideop=True)
     assert event.color == EMBED_COLOR['WW2']
 
-    event = Event(date, (), platoon_size='empty')
+    event = Event(date, offline_load=True)
     event.terrain = 'Livonia'
     assert event.color == EMBED_COLOR['DLC']
 
-    event = Event(date, (), platoon_size='empty', sideop=True)
+    event = Event(date, offline_load=True, sideop=True)
     event.terrain = 'Livonia'
     assert event.color == EMBED_COLOR['DLC_SIDEOP']
