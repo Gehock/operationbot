@@ -1,5 +1,6 @@
 from datetime import datetime, time
 
+from config import EMBED_COLOR
 from event import Event
 
 
@@ -45,3 +46,29 @@ def test_dlc():
     assert event.dlc is None
     event.dlc = 'GlobMob'
     assert event.dlc == 'GlobMob'
+
+
+def test_ww2():
+    date = datetime(2020, 1, 1, 12, 0)
+    event = Event(date, (), platoon_size='WW2side', sideop=True)
+    assert event.title == "WW2 Side Operation"
+
+
+def test_colours():
+    date = datetime(2020, 1, 1, 12, 0)
+    event = Event(date, (), platoon_size='empty')
+    assert event.color == EMBED_COLOR['DEFAULT']
+
+    event = Event(date, (), platoon_size='empty', sideop=True)
+    assert event.color == EMBED_COLOR['SIDEOP']
+
+    event = Event(date, (), platoon_size='WW2side', sideop=True)
+    assert event.color == EMBED_COLOR['WW2']
+
+    event = Event(date, (), platoon_size='empty')
+    event.terrain = 'Livonia'
+    assert event.color == EMBED_COLOR['DLC']
+
+    event = Event(date, (), platoon_size='empty', sideop=True)
+    event.terrain = 'Livonia'
+    assert event.color == EMBED_COLOR['DLC_SIDEOP']
