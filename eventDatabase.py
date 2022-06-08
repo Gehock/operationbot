@@ -63,8 +63,6 @@ class EventDatabase:
 
         # Add event to eventsArchive
         cls.eventsArchive[event.id] = event
-        cls.toJson(archive=False)
-        cls.toJson(archive=True)
 
     @classmethod
     def removeEvent(cls, eventID: int, archived=False) -> Optional[Event]:

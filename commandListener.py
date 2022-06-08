@@ -848,6 +848,8 @@ class CommandListener(Cog):
 
         # Archive event and export
         EventDatabase.archiveEvent(event)
+        EventDatabase.toJson(archive=True)
+        EventDatabase.toJson(archive=False)
         try:
             eventMessage = await msgFnc.getEventMessage(event, self.bot)
         except MessageNotFound:
