@@ -394,7 +394,7 @@ class CommandListener(Cog):
     @command(aliases=['csz'])
     async def changesize(self, ctx: Context, event: ArgEvent, new_size: str):
         if new_size not in cfg.PLATOON_SIZES:
-            ctx.send(f"Invalid new size {new_size}")
+            await ctx.send(f"Invalid new size {new_size}")
             return
 
         await self._change_size(ctx, event, new_size)
@@ -413,7 +413,7 @@ class CommandListener(Cog):
     @command(aliases=['csza'])
     async def changesizeall(self, ctx: Context, new_size: str):
         if new_size not in cfg.PLATOON_SIZES:
-            ctx.send(f"Invalid new size {new_size}")
+            await ctx.send(f"Invalid new size {new_size}")
             return
 
         for event in EventDatabase.events.values():
