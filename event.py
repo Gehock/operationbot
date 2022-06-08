@@ -67,8 +67,7 @@ class Event:
         else:
             raise ValueError(f"Unsupported platoon size: {platoon_size}")
 
-        if self.platoon_size.startswith("WW2"):
-            self.title = "WW2 " + self.title
+        self.ww2 = self.platoon_size.startswith("WW2")
 
         self.normalEmojis = self._getNormalEmojis(guildEmojis, offline_load)
         if not importing:
@@ -85,6 +84,8 @@ class Event:
             return EMBED_COLOR['DLC_SIDEOP']
         if self.dlc:
             return EMBED_COLOR['DLC']
+        if self.ww2:
+            return EMBED_COLOR['WW2']
         if self.sideop:
             return EMBED_COLOR['SIDEOP']
         return EMBED_COLOR['DEFAULT']
@@ -95,13 +96,11 @@ class Event:
             # It an explicit title is set, return that
             return self._title
         # Otherwise, use dynamic title
-        if self.dlc and self.sideop:
-            return f"{self.dlc} {SIDEOP_TITLE}"
-        if self.dlc:
-            return f"{self.dlc} {TITLE}"
-        if self.sideop:
-            return SIDEOP_TITLE
-        return TITLE
+        dlc = f"{self.dlc} " if self.dlc else ""
+        title = SIDEOP_TITLE if self.sideop else TITLE
+        ww2 = "WW2 " if self.ww2 else ""
+
+        return f"{ww2}{dlc}{title}"
 
     @title.setter
     def title(self, title):
