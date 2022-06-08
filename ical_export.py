@@ -1,7 +1,7 @@
 from icalendar import Calendar as iCalendar
 from icalendar import Event as iEvent
 
-from .event import Event as ZeusEvent
+from event import Event as ZeusEvent
 
 
 def to_ical(zevent: ZeusEvent) -> iEvent:
@@ -13,23 +13,24 @@ def to_ical(zevent: ZeusEvent) -> iEvent:
     return ievent
 
 
-def generate_calendar(ievents: list[iEvent]) -> iCalendar:
+def generate_calendar(ical_events: list[iEvent]) -> iCalendar:
     """Aggregates given ical events into a calendar object"""
-    cal = iCalendar()
-    for ievent in ievents:
-        cal.add_component(event)
-    return cal
+    calendar = iCalendar()
+    for ical_event in ical_events:
+        calendar.add_component(ical_event)
+    return calendar
 
 
 def create_ical_file(ical: iCalendar, filepath: str):
-    with open(filepath, 'w') as ical_file:
+    with open(filepath, 'wb') as ical_file:
         ical_file.write(ical.to_ical())
-        ical_file.write("\n")  # End of file newline
+        # ical_file.write(b"\n")  # End of file newline
+
 
 if __name__ == '__main__':
-     # Fetch a few zeus events, left up to the reader:
-     # events: list[ZeusEvent] = magic_event_fetcher()
-     zevents = []
-     ievents = [to_ical(zevent) for zevent in in zevents]
-     cal = generate_calendar(ievents)
-     create_ical_file("zeus_events.ics")
+    # Fetch a few zeus events, left up to the reader:
+    # zevents: list[ZeusEvent] = magic_event_fetcher()
+    zevents = []  # type: ignore
+    ievents = [to_ical(zevent) for zevent in zevents]
+    cal = generate_calendar(ievents)
+    create_ical_file(cal, "zeus_events.ics")
