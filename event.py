@@ -1,8 +1,9 @@
 import datetime
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union, cast
 
 import discord
-from discord import Embed, Emoji
+from discord import Embed, Emoji, Guild, Object
+from discord.state import ConnectionState
 
 import config as cfg
 from additional_role_group import AdditionalRoleGroup
@@ -384,14 +385,22 @@ class Event:
             self.dlc = None
         self._terrain = terrain
 
-    # Get emojis for normal roles
     def _getNormalEmojis(self, guildEmojis: Tuple[Emoji, ...],
                          offline_load=False) -> Dict[str, Emoji]:
-        normalEmojis = {}
+        """Get emojis for normal roles"""
+        normalEmojis: dict[str, Emoji] = {}
 
         if offline_load:
-            for emoji in cfg.DEFAULT_ROLES[self.platoon_size].keys():
-                normalEmojis[emoji] = emoji
+            for name in cfg.DEFAULT_ROLES[self.platoon_size].keys():
+                guild = cast(Guild, Object(0))
+                state = cast(ConnectionState, None)
+                data = {
+                    "require_colons": True,
+                    "managed": False,
+                    "id": "0",
+                    "name": name,
+                }
+                normalEmojis[name] = Emoji(guild=guild, state=state, data=data)
         else:
             for emoji in guildEmojis:
                 if emoji.name in cfg.DEFAULT_ROLES[self.platoon_size]:
@@ -409,9 +418,9 @@ class Event:
                 emoji = role.emoji
                 # Skip the ZEUS reaction. Zeuses can only be signed up using
                 # the signup command
-                if not (isinstance(emoji, Emoji)
-                        and emoji.name == cfg.EMOJI_ZEUS):
-                    reactions.append(role.emoji)
+                if isinstance(emoji, Emoji) and emoji.name == cfg.EMOJI_ZEUS:
+                    continue
+                reactions.append(role.emoji)
 
         if self.sideop or cfg.ALWAYS_DISPLAY_ATTENDANCE:
             if cfg.ATTENDANCE_EMOJI:

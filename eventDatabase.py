@@ -24,9 +24,10 @@ class EventDatabase:
     @classmethod
     @property
     def emojis(cls) -> Tuple[Emoji, ...]:
-        if cls._emojis is None and not cls.offline_load:
+        if cls._emojis is None:
+            if cls.offline_load:
+                return ()
             raise ValueError("No EventDatabase.emojis set")
-        # FIXME: what to return when emojis is None?
         return cls._emojis
 
     @classmethod
@@ -46,7 +47,8 @@ class EventDatabase:
         # Create event
         event = Event(date, cls.emojis, eventID=eventID,  # type: ignore
                       importing=importing,
-                      sideop=sideop, platoon_size=platoon_size)
+                      sideop=sideop, platoon_size=platoon_size,
+                      offline_load=cls.offline_load)
 
         # Store event
         cls.events[eventID] = event
