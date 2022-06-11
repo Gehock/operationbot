@@ -383,7 +383,7 @@ class Event:
                         and emoji.name == cfg.EMOJI_ZEUS):
                     reactions.append(role.emoji)
 
-        if self.sideop or cfg.ALWAYS_DISPLAY_ATTENDANCE:
+        if self.sideop:
             if cfg.ATTENDANCE_EMOJI:
                 reactions.append(cfg.ATTENDANCE_EMOJI)
 
