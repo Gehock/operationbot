@@ -45,7 +45,7 @@ class Role:
             self.name = name
         if not manual_load:
             self.userID = data["userID"]
-            self.userName = data["userName"]
+            self.userqName = str(data["userName"])
 
     @property
     def display_name(self) -> Union[str, Emoji]:

@@ -30,3 +30,10 @@ def test_platoon_size(database: EventDatabase):
     date = datetime(2020, 1, 1, 12, 0)
     event = database.createEvent(date, platoon_size='1PLT')
     assert event.platoon_size == '1PLT'
+
+
+# def test_event_text():
+#     database = EventDatabase
+#     database.loadDatabase(offline_load=True)
+#     event = database.events[766]
+#     assert event.text == "The first side operation in the game.\n\n"

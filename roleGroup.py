@@ -78,7 +78,7 @@ class RoleGroup:
 
     def fromJson(self, data: dict, emojis: Tuple[Emoji, ...],
                  manual_load=False):
-        self.name = data["name"]
+        self.name = str(data["name"])
         if not manual_load:
             self.isInline = data["isInline"]
 

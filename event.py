@@ -385,6 +385,44 @@ class Event:
             self.dlc = None
         self._terrain = terrain
 
+    @property
+    def text(self) -> str:
+        server_port = (f"\nServer port: **{self.port}**"
+                       if self.port != cfg.PORT_DEFAULT else "")
+        dlc_note = (f"\n\nThe **{self.dlc} DLC** is required to "
+                    "join this event"
+                    if self.dlc else "")
+        event_description = (f"\n\n{self.description}"
+                             if self.description else "")
+        zeus = self.findRoleWithName("Zeus").userName
+        if self.mods:
+            if '\n' in self.mods:
+                mods = f"\n\nMods:\n{self.mods}\n"
+            else:
+                mods = f"\n\nMods: {self.mods}\n"
+        else:
+            mods = ""
+
+        return (f"Terrain: {self.terrain} - Faction: {self.faction}"
+                f"{server_port}"
+                f"{dlc_note}"
+                f"{event_description}"
+                f"{mods}"
+                "\n\n"
+                f"Zeus: {zeus}\n"
+                f"Signups: \n\n{self.signups}")
+
+    @property
+    def signups(self) -> str:
+        text = ""
+        for group in self.roleGroups.values():
+            text += f"{group.name}:\n"
+            for role in group.roles:
+                name = role.userName or "Nobody"
+                text += f"{role.name}: {name}\n"
+            text += '\n'
+        return text
+
     def _getNormalEmojis(self, guildEmojis: Tuple[Emoji, ...],
                          offline_load=False) -> Dict[str, Emoji]:
         """Get emojis for normal roles"""
