@@ -1,0 +1,21 @@
+# https://github.com/PyCQA/pylint/issues/1236#issuecomment-438997486
+[BASIC]
+good-names=
+  e,
+[MASTER]
+disable=
+  C0114,
+  C0115,
+  C0116,
+  C0103,
+  W0511,  # fixme
+  C0302,  # too-many-lines
+  R0201,  # no-self-use
+  R0913,  # too-many-arguments
+  R0912,  # too-many-branches
+  R0914,  # too-many-locals
+  R0904,  # too-many-public-methods
+  R0903,  # too-few-public-methods
+  R0902,  # too-many-instance-attributes
+  W1514,  # unspecified-encoding
+  C0301,  # line-too-long
