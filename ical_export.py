@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from datetime import timedelta
 from zoneinfo import ZoneInfo
 
@@ -24,8 +26,6 @@ def to_ical(operation: ZeusEvent) -> Event:
 def generate_calendar(ical_events: list[Event]) -> Calendar:
     """Aggregates given ical events into a calendar object"""
     cal = Calendar()
-    # cal.add('prodid', '-//Zeusops//Operation calendar//EN')
-    # cal.add('version', '2.0')
     for event in ical_events:
         cal.events.add(event)
     return cal

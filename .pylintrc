@@ -10,7 +10,6 @@ disable=
   C0103,
   W0511,  # fixme
   C0302,  # too-many-lines
-  R0201,  # no-self-use
   R0913,  # too-many-arguments
   R0912,  # too-many-branches
   R0914,  # too-many-locals

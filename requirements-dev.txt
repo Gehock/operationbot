@@ -1,2 +1,5 @@
 git+https://github.com/Gehock/discord.py-stubs@emoji-init
-ics
+flake8
+pylint
+mypy
+pytest
