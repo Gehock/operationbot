@@ -9,6 +9,29 @@ DiscordID = int
 """An ID in discord, regardless of what it points to (Msg or Chan)"""
 
 
+class Role(BaseModel):
+    """A single role (to sign up to)"""
+
+    name: str
+    emoji: Optional[str] = None
+    show_name: bool
+    user_id: Optional[DiscordID] = Field(alias="userID")
+    user_name: str = Field(alias="userName")
+
+
+class RoleGroup(BaseModel):
+    """A grouping of roles, each role is signup-able"""
+
+    name: str
+    is_inline: bool = Field(alias="isInline")
+    # roles: list[Role]   # Ideally this, but actually:
+    roles: dict[str, Role]
+
+
+RoleGroups = dict[str, RoleGroup]
+"""Lookup table for RoleGroup, by name"""
+
+
 class Event(BaseModel):
     """A single event"""
 
@@ -21,11 +44,13 @@ class Event(BaseModel):
     faction: str
     port: int
     mods: str
-    message_id: DiscordID = Field(alias="messageID")
+    message_id: DiscordID = Field(
+        alias="messageID", description="The Discord Message ID"
+    )
     platoon_size: Literal["1PLT"]
     sideop: bool
     attendees: dict  # TODO Get specific
-    role_groups: dict = Field(alias="roleGroups")
+    role_groups: RoleGroups = Field(alias="roleGroups")
     dlc: Optional[str] = None
 
     # def __init__(self, date: datetime.datetime, guildEmojis: Tuple[Emoji, ...],
@@ -37,7 +62,7 @@ class Event(BaseModel):
     #     self.description = DESCRIPTION
     #     self.port = cfg.PORT_DEFAULT
     #     self.mods = MODS
-    #     self.roleGroups: Dict[str, RoleGroup] = {}
+    #     self.roleGroups: = {}
     #     self.messageID = 0
     #     self.id = eventID
     #     self.sideop = sideop
