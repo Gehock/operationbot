@@ -1,0 +1,967 @@
+{
+  "version": 4,
+  "nextID": 858,
+  "events": {
+    "857": {
+      "title": null,
+      "date": "2022-12-31",
+      "description": "",
+      "time": "18:30",
+      "terrain": "unknown",
+      "faction": "unknown",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1049961262982909982,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "856": {
+      "title": null,
+      "date": "2022-12-30",
+      "description": "",
+      "time": "18:30",
+      "terrain": "unknown",
+      "faction": "unknown",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1049961266724225105,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "Bobby"
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "855": {
+      "title": null,
+      "date": "2022-12-25",
+      "description": "",
+      "time": "18:30",
+      "terrain": "unknown",
+      "faction": "unknown",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1049961269823799366,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "854": {
+      "title": null,
+      "date": "2022-12-24",
+      "description": "",
+      "time": "18:30",
+      "terrain": "unknown",
+      "faction": "unknown",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1049961272730464296,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "853": {
+      "title": null,
+      "date": "2022-12-23",
+      "description": "",
+      "time": "18:30",
+      "terrain": "unknown",
+      "faction": "unknown",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1049961275708407818,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "852": {
+      "title": null,
+      "date": "2022-12-18",
+      "description": "",
+      "time": "18:30",
+      "terrain": "unknown",
+      "faction": "unknown",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1049961277784604713,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "George"
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "Charlie"
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "851": {
+      "title": null,
+      "date": "2022-12-17",
+      "description": "",
+      "time": "18:30",
+      "terrain": "unknown",
+      "faction": "unknown",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1049961281093906452,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "George"
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "Charlie"
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "Zoe"
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "850": {
+      "title": null,
+      "date": "2022-12-16",
+      "description": "No 1PLT required",
+      "time": "18:30",
+      "terrain": "Virolahti",
+      "faction": "Civilian Survivors",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1050730379264413707,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "Peter"
+            }
+          }
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    },
+    "849": {
+      "title": null,
+      "date": "2022-12-11",
+      "description": "",
+      "time": "18:30",
+      "terrain": "Virolahti",
+      "faction": "FDF UTJR",
+      "port": 2302,
+      "mods": "",
+      "messageID": 1050730472772206643,
+      "platoon_size": "1PLT",
+      "sideop": false,
+      "attendees": {},
+      "roleGroups": {
+        "Company": {
+          "name": "Company",
+          "isInline": true,
+          "roles": {
+            "ZEUS": {
+              "name": "ZEUS",
+              "show_name": false,
+              "userID": 1234,
+              "userName": "Annie"
+            }
+          }
+        },
+        "1st Platoon": {
+          "name": "1st Platoon",
+          "isInline": true,
+          "roles": {
+            "1PLT": {
+              "name": "1PLT",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "FAC": {
+              "name": "FAC",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "RTO": {
+              "name": "RTO",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Dummy": {
+          "name": "Dummy",
+          "isInline": true,
+          "roles": {}
+        },
+        "Alpha": {
+          "name": "Alpha",
+          "isInline": true,
+          "roles": {
+            "ASL": {
+              "name": "ASL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A1": {
+              "name": "A1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "A2": {
+              "name": "A2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Bravo": {
+          "name": "Bravo",
+          "isInline": true,
+          "roles": {
+            "BSL": {
+              "name": "BSL",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B1": {
+              "name": "B1",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            },
+            "B2": {
+              "name": "B2",
+              "show_name": false,
+              "userID": null,
+              "userName": ""
+            }
+          }
+        },
+        "Additional": {
+          "name": "Additional",
+          "isInline": false,
+          "roles": {}
+        }
+      }
+    }
+  }
+}
