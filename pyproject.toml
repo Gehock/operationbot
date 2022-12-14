@@ -18,13 +18,16 @@ python = "^3.11"
 "discord.py" = ">=1.3.4,<2.0.0"
 # Yaml parser
 pyyaml = "*"
-
+# JSON-serializable content
+pydantic = "^1.10.2"
 
 # Note: Linters not defined in this file but .pre-commit-config.yaml, which
 # installs/manages each tool in its own isolated virtualenv
 
 [tool.poetry.group.test.dependencies]
 pytest = "7.*"
+# Shared test data directory
+pytest-datadir = "*"
 # Test coverage
 pytest-cov = "4.*"
 # Clearer assertion failures (colorful diff)
@@ -43,6 +46,12 @@ myst-parser = "*"
 sphinx-autodoc2 = "*"
 # Generate Dash/Zeal "docsets" (offline dev-docs package) from HTML docs
 doc2dash = "*"
+
+[tool.poetry.group.dev.dependencies]
+types-PyYAML = "*"
+# Disabled temporarily because not compatible with the current version of pydantic
+# "discord.py-stubs" = "*"
+pre-commit = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
