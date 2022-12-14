@@ -8,6 +8,13 @@ from pydantic import BaseModel, Field
 DiscordID = int
 """An ID in discord, regardless of what it points to (Msg or Chan)"""
 
+# Disabled because User not stored as list[User] in JSON
+# but instead as dict[id,display_name] for now
+# class User(BaseModel):
+#     """A (Discord) user, for signup/attendance purposes"""
+#     id: DiscordID
+#     display_name: str
+
 
 class Role(BaseModel):
     """A single role (to sign up to)"""
@@ -49,7 +56,8 @@ class Event(BaseModel):
     )
     platoon_size: Literal["1PLT", "2PLT", "sideop", "WW2side"]
     sideop: bool
-    attendees: dict  # TODO Get specific
+    # attendees: list[User]  # Ideally, but actually:
+    attendees: dict[str, str]
     role_groups: RoleGroups = Field(alias="roleGroups")
     dlc: Optional[str] = None
 
