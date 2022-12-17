@@ -5,21 +5,14 @@ import sys
 import discord
 
 from operationbot import config as cfg
-from operationbot import secret as s
 from operationbot.bot import OperationBot
-from operationbot.secret import COMMAND_CHAR, TOKEN
+from operationbot.models.config import Secret
 
 CONFIG_VERSION = 12
-SECRET_VERSION = 1
 if cfg.VERSION != CONFIG_VERSION:
     raise ValueError(
         f"Incompatible config file, expecting version {CONFIG_VERSION}, "
         f"found version {cfg.VERSION}"
-    )
-if s.VERSION != SECRET_VERSION:
-    raise ValueError(
-        f"Incompatible secrets file, expecting version {SECRET_VERSION}, "
-        f"found version {s.VERSION}"
     )
 
 initial_extensions = [
@@ -28,11 +21,6 @@ initial_extensions = [
     "operationbot.cogs.repl",
 ]
 
-intents = discord.Intents.default()
-intents.members = True  # pylint: disable=assigning-non-slot
-intents.messages = True  # pylint: disable=assigning-non-slot
-bot = OperationBot(command_prefix=COMMAND_CHAR, intents=intents)
-# bot.remove_command("help")
 
 if sys.version_info < (3, 10):
     raise Exception("Must be run with Python 3.10 or higher")
@@ -42,6 +30,15 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
     logging.getLogger("discord").setLevel(logging.INFO)
     logging.getLogger("discord.gateway").setLevel(logging.WARNING)
+    logging.info("Loading config and secrets")
+    s = Secret()  # Or via yaml.safe_load
+
+    intents = discord.Intents.default()
+    intents.members = True  # pylint: disable=assigning-non-slot
+    intents.messages = True  # pylint: disable=assigning-non-slot
+    bot = OperationBot(secrets=s, command_prefix=s.COMMAND_CHAR, intents=intents)
+    # bot.remove_command("help")
+
     print("Starting up")
     bot.load_extension("operationbot.reload")
     print("Loading extensions")
@@ -51,4 +48,4 @@ def main():
         # except Exception:
         #     print(f'failed to load extension {extension}')
     print("Running")
-    bot.run(TOKEN)
+    bot.run(s.TOKEN)

@@ -11,7 +11,7 @@ from discord.guild import Guild
 
 from operationbot import config as cfg
 from operationbot.eventDatabase import EventDatabase
-from operationbot.secret import ADMIN, SIGNOFF_NOTIFY_USER
+from operationbot.models.config import Secret
 
 
 class AliasHelpCommand(DefaultHelpCommand):
@@ -55,13 +55,16 @@ class AliasHelpCommand(DefaultHelpCommand):
 class OperationBot(Bot):
     """A custom Discord bot."""
 
-    def __init__(self, *args, help_command=None, **kwargs):
+    def __init__(self, *args, secrets: Secret, help_command=None, **kwargs):
         super().__init__(*args, **kwargs)
+        self.secrets = secrets
+
         self.commandchannel: TextChannel
         self.logchannel: TextChannel
         self.eventchannel: TextChannel
         self.eventarchivechannel: TextChannel
         self.owner: User
+        self.owner_id = self.secrets.admin
         self.signoff_notify_user: User
         self.awaiting_reply = False
         self.processing = True
@@ -77,9 +80,8 @@ class OperationBot(Bot):
         self.logchannel = self._get_channel(cfg.LOG_CHANNEL)
         self.eventchannel = self._get_channel(cfg.EVENT_CHANNEL)
         self.eventarchivechannel = self._get_channel(cfg.EVENT_ARCHIVE_CHANNEL)
-        self.owner_id = ADMIN
         self.owner = self._get_user(self.owner_id)
-        self.signoff_notify_user = self._get_user(SIGNOFF_NOTIFY_USER)
+        self.signoff_notify_user = self._get_user(self.secrets.signoff_notify_user)
 
     def _get_user(self, user_id: int) -> User:
         user = self.get_user(user_id)
