@@ -79,6 +79,9 @@ unfixable = [
 line-length = 88
 extend-exclude = ["docs/*"]
 
+# Make packages under src/ be recognised as first party even when imported from
+# under test/
+src = ["src"]
 
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
 # Add I = isort (import sorter), to remove need for isort itself
