@@ -1,7 +1,9 @@
+# import logging
 from icalendar import Calendar as iCalendar
 from icalendar import Event as iEvent
 
 from event import Event as ZeusEvent
+from eventDatabase import EventDatabase
 
 
 def to_ical(zevent: ZeusEvent) -> iEvent:
@@ -15,10 +17,12 @@ def to_ical(zevent: ZeusEvent) -> iEvent:
 
 def generate_calendar(ical_events: list[iEvent]) -> iCalendar:
     """Aggregates given ical events into a calendar object"""
-    calendar = iCalendar()
+    cal = iCalendar()
+    cal.add('prodid', '-//Zeusops//Operation calendar//EN')
+    cal.add('version', '2.0')
     for ical_event in ical_events:
-        calendar.add_component(ical_event)
-    return calendar
+        cal.add_component(ical_event)
+    return cal
 
 
 def create_ical_file(ical: iCalendar, filepath: str):
@@ -30,7 +34,8 @@ def create_ical_file(ical: iCalendar, filepath: str):
 if __name__ == '__main__':
     # Fetch a few zeus events, left up to the reader:
     # zevents: list[ZeusEvent] = magic_event_fetcher()
-    zevents = []  # type: ignore
-    ievents = [to_ical(zevent) for zevent in zevents]
-    cal = generate_calendar(ievents)
-    create_ical_file(cal, "zeus_events.ics")
+    # logging.basicConfig(level=logging.WARNING)
+    EventDatabase.loadDatabase(offline_load=True)
+    ievents = [to_ical(zevent) for zevent in EventDatabase.events.values()]
+    calendar = generate_calendar(ievents)
+    create_ical_file(calendar, "zeus_events.ics")
