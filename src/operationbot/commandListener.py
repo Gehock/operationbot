@@ -21,7 +21,7 @@ from discord.ext.commands.errors import (
 from operationbot import config as cfg
 from operationbot import messageFunctions as msgFnc
 from operationbot.bot import OperationBot
-from operationbot.command_helpers import set_dlc, show_event, update_event
+from operationbot.command_helpers import BotCommands
 from operationbot.converters import (
     ArgArchivedEvent,
     ArgDate,
@@ -44,6 +44,7 @@ from operationbot.secret import COMMAND_CHAR as CMD
 class CommandListener(Cog):
     def __init__(self, bot: OperationBot):
         self.bot = bot
+        self.cmd = BotCommands(bot)
 
         @bot.check
         async def globally_block_dms(ctx: Context):
@@ -188,12 +189,12 @@ class CommandListener(Cog):
             await msgFnc.sortEventMessages(self.bot)
         if not silent:
             await ctx.send(f"Created event {event}")
-            await show_event(ctx, event, self.bot)
+            await self.cmd.show_event(ctx, event)
         return event
 
     @command(aliases=["cat"])
     async def show(self, ctx: Context, event: ArgEvent):
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Create event command
     @command(aliases=["c"])
@@ -271,7 +272,7 @@ class CommandListener(Cog):
         msg_zeus = f" with Zeus {zeus.display_name}" if zeus else ""
         if not quiet:
             await ctx.send(f"Created event {event}{msg_zeus}")
-            await show_event(ctx, event, self.bot)
+            await self.cmd.show_event(ctx, event)
         return event
 
     @command(aliases=["cq"])
@@ -462,7 +463,7 @@ class CommandListener(Cog):
         if ret.strip() != "":
             await ctx.send(ret)
 
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         await ctx.send("Event resized succesfully")
 
     @command(aliases=["csza"])
@@ -486,7 +487,7 @@ class CommandListener(Cog):
         if ret.strip() != "":
             await ctx.send(ret)
 
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         await ctx.send("Event reordered succesfully")
 
     @command(aliases=["roa"])
@@ -500,7 +501,7 @@ class CommandListener(Cog):
             if ret.strip() != "":
                 await ctx.send(ret)
 
-            await update_event(event, self.bot, export=False)
+            await self.cmd.update_event(event, export=False)
             await ctx.send(f"Event {event} reordered succesfully")
         await ctx.send("All events reordered succesfully")
         EventDatabase.toJson()
@@ -517,9 +518,9 @@ class CommandListener(Cog):
         except RoleError as e:
             if batch:
                 # Adding the latest role failed, saving previously added roles
-                await update_event(event, self.bot, reorder=False)
+                await self.cmd.update_event(event, reorder=False)
             raise e
-        await update_event(event, self.bot, reorder=False, export=(not batch))
+        await self.cmd.update_event(event, reorder=False, export=(not batch))
 
     @command(aliases=["ar"])
     async def addrole(self, ctx: Context, event: ArgEvent, *, rolename: UnquotedStr):
@@ -546,12 +547,12 @@ class CommandListener(Cog):
                 msg += "All roles added, updating events\n"
             finally:
                 await ctx.send(msg)
-            await update_event(event, self.bot)
+            await self.cmd.update_event(event)
             await ctx.send("Events updated")
         else:
             await self._add_role(event, rolename)
             await ctx.send(f"Role {rolename} added to event {event}")
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Remove additional role from event command
     @command(aliases=["rr"])
@@ -562,9 +563,9 @@ class CommandListener(Cog):
         """
         role_name = role.name
         event.removeAdditionalRole(role)
-        await update_event(event, self.bot, reorder=False)
+        await self.cmd.update_event(event, reorder=False)
         await ctx.send(f"Role {role_name} removed from {event}")
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     @command(aliases=["rnr", "rename"])
     async def renamerole(
@@ -577,11 +578,11 @@ class CommandListener(Cog):
         """
         old_name = role.name
         event.renameAdditionalRole(role, new_name)
-        await update_event(event, self.bot, reorder=False)
+        await self.cmd.update_event(event, reorder=False)
         await ctx.send(
             f"Role renamed. Old name: {old_name}, new name: {role} @ {event}"
         )
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     @command(aliases=["rra"])
     async def removereaction(self, ctx: Context, event: ArgEvent, reaction: str):
@@ -589,9 +590,9 @@ class CommandListener(Cog):
         Removes a role and the corresponding reaction from the event and updates the message.
         """  # NOQA
         self._find_remove_reaction(reaction, event)
-        await update_event(event, self.bot, reorder=False)
+        await self.cmd.update_event(event, reorder=False)
         await ctx.send(f"Reaction {reaction} removed from {event}")
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     def _find_remove_reaction(self, reaction: str, event: Event):
         for group in event.roleGroups.values():
@@ -622,7 +623,7 @@ class CommandListener(Cog):
         await msgFnc.updateMessageEmbed(eventMessage, event)
         EventDatabase.toJson()  # Update JSON file
         await ctx.send(f"Group {groupName} removed from {event}")
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Set title of event command
     @command(aliases=["stt"])
@@ -635,11 +636,11 @@ class CommandListener(Cog):
         # NOTE: Does not check for too long input. Will result in an API error
         # and a bot crash
         event.title = title
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         await ctx.send(
             f"Title {event.title} set for operation ID {event.id} at {event.date}"
         )
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Set date of event command
     @command(aliases=["sdt"])
@@ -656,7 +657,7 @@ class CommandListener(Cog):
         await ctx.send(
             f"Date {event.date} set for operation {event.title} ID {event.id}"
         )
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Set time of event command
     @command(aliases=["stm"])
@@ -671,7 +672,7 @@ class CommandListener(Cog):
         # Update event and sort events, export
         await msgFnc.sortEventMessages(self.bot)
         await ctx.send(f"Time set for operation {event}")
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Set terrain of event command
     @command(aliases=["st"])
@@ -682,9 +683,9 @@ class CommandListener(Cog):
         """
         # Change terrain, update event, export
         event.terrain = terrain
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         await ctx.send(f"Terrain {event.terrain} set for operation {event}")
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Set faction of event command
     @command(aliases=["sf"])
@@ -695,19 +696,19 @@ class CommandListener(Cog):
         """
         # Change faction, update event, export
         event.faction = faction
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         await ctx.send(f"Faction {event.faction} set for operation {event}")
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     async def _set_description(self, ctx: Context, event: Event, description: str = ""):
         # Change description, update event
         event.description = description
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         if description:
             await ctx.send(
                 f'Description "{event.description}" ' f"set for operation {event}"
             )
-            await show_event(ctx, event, self.bot)
+            await self.cmd.show_event(ctx, event)
         else:
             await ctx.send(f"Description cleared from operation {event}")
 
@@ -736,10 +737,10 @@ class CommandListener(Cog):
 
     async def _set_port(self, ctx: Context, event: Event, port: int = cfg.PORT_DEFAULT):
         event.port = port
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         if port != cfg.PORT_DEFAULT:
             await ctx.send(f'Port "{event.port}" set for operation {event}')
-            await show_event(ctx, event, self.bot)
+            await self.cmd.show_event(ctx, event)
         else:
             await ctx.send(f"Default port set for operation {event}")
 
@@ -764,11 +765,11 @@ class CommandListener(Cog):
 
     async def _set_mods(self, ctx: Context, event: Event, mods: str = ""):
         event.mods = mods
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         if mods:
             await ctx.send(f"Mods ```\n{event.mods}\n``` set for operation {event}")
             await self._set_port(ctx, event, cfg.PORT_MODDED)
-            await show_event(ctx, event, self.bot)
+            await self.cmd.show_event(ctx, event)
         else:
             await ctx.send(f"Mods cleared from operation {event}")
             await self._set_port(ctx, event, cfg.PORT_DEFAULT)
@@ -803,7 +804,7 @@ class CommandListener(Cog):
 
         Example: setdlc 1 APEX
         """
-        await set_dlc(ctx, event, self.bot, dlc)
+        await self.cmd.set_dlc(ctx, event, dlc)
 
     @command(aliases=["cdlc"])
     async def cleardlc(self, ctx: Context, event: ArgEvent):
@@ -811,7 +812,7 @@ class CommandListener(Cog):
 
         Example: cleardlc 1
         """
-        await set_dlc(ctx, event, self.bot)
+        await self.cmd.set_dlc(ctx, event)
 
     async def _set_quick(
         self,
@@ -834,7 +835,7 @@ class CommandListener(Cog):
         msg_zeus = f" with Zeus {zeus.display_name}" if zeus else ""
         if not quiet:
             await ctx.send(f"Updated event {event}{msg_zeus}")
-            await show_event(ctx, event, self.bot)
+            await self.cmd.show_event(ctx, event)
 
     @command(aliases=["sq"])
     async def setquick(
@@ -883,7 +884,7 @@ class CommandListener(Cog):
             role = cast(ArgRole, event.findRoleWithName(cfg.EMOJI_ZEUS))
         # Sign user up, update event, export
         old_signup, replaced_user = event.signup(role, user, replace=True)
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         message = f"User {user.display_name} signed up to event {event} as {role.name}"
         if old_signup:
             # User was signed on to a different role previously
@@ -892,7 +893,7 @@ class CommandListener(Cog):
             # Took priority over another user's signup
             message += f". Replaced user {replaced_user.display_name}"
         await ctx.send(message)
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Remove signup on event of user command
     @command(aliases=["rs"])
@@ -912,12 +913,12 @@ class CommandListener(Cog):
             )
             return
 
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
         await ctx.send(
             f"User {user.display_name} removed from role "
             f"{role.display_name} in event {event}"
         )
-        await show_event(ctx, event, self.bot)
+        await self.cmd.show_event(ctx, event)
 
     # Archive event command
     @command(aliases=["a"])
@@ -1078,7 +1079,7 @@ class CommandListener(Cog):
         if target:
             # Display the loaded event in the command channel
             await msgFnc.createEventMessage(event, target, update_id=False)
-        await update_event(event, self.bot)
+        await self.cmd.update_event(event)
 
     # @command()
     # async def createmessages(self, ctx: Context):
@@ -1091,7 +1092,7 @@ class CommandListener(Cog):
     @command(aliases=["upde"])
     async def updateevent(self, ctx: Context, event: ArgEvent, import_db: bool = False):
         """Import database, update embed and reactions on a single event message."""  # NOQA
-        if await update_event(event, self.bot, import_db=import_db):
+        if await self.cmd.update_event(event, import_db=import_db):
             await ctx.send("Event updated")
         else:
             await ctx.send("No changes required")
